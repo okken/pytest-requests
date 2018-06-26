@@ -1,0 +1,10 @@
+site_name: pytest-requests
+site_description: Fixtures to mock requests
+site_author: Brian Okken
+
+theme: readthedocs
+
+repo_url: https://github.com/okken/pytest-requests
+
+pages:
+- Home: index.md
