@@ -10,7 +10,7 @@ Maintainers guide to the `pytest-requests` package.
 
 #### Owner Todos:
 
-- [ ] Ensure `CHANGES.rst` is up-to-date (contained in #106).
+- [ ] Ensure `CHANGES.rst` is up-to-date.
 - [ ] Update `CHANGES.rst`, replacing `master` with release version and date.
 - [ ] Bumpversion to `release` (with tag).
 - [ ] Bumpversion to `minor`.
