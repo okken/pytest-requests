@@ -1,30 +1,36 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 
-def test_bar_fixture(testdir):
-    """Make sure that pytest accepts our fixture."""
+
+def test_fixture_simple_patch(testdir):
+    """Most basic use case. Patch a simple """
 
     # create a temporary pytest test module
     testdir.makepyfile("""
-        def test_sth(bar):
-            assert bar == "europython2015"
+        import requests
+
+        def test_simple(pytest_requests):
+            with pytest_requests.patch('/api/test') as patch:
+                patch.returns = pytest_requests.good('hello')
+                response = requests.get('https://test.api/api/test')
+                assert response.text == 'hello'
     """)
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
-        '--foo=europython2015',
         '-v'
     )
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines([
-        '*::test_sth PASSED*',
+        '*::test_simple PASSED*',
     ])
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
-
+@pytest.mark.xfail('Not implemented')
 def test_help_message(testdir):
     result = testdir.runpytest(
         '--help',
@@ -35,7 +41,7 @@ def test_help_message(testdir):
         '*--foo=DEST_FOO*Set the value for the fixture "bar".',
     ])
 
-
+@pytest.mark.xfail('Not implemented')
 def test_hello_ini_setting(testdir):
     testdir.makeini("""
         [pytest]
