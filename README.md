@@ -1,80 +1,65 @@
-===============
 pytest-requests
 ===============
 
-.. image:: https://img.shields.io/pypi/v/pytest-requests.svg
-    :target: https://pypi.org/project/pytest-requests
-    :alt: PyPI version
+[![PyPI version](https://img.shields.io/pypi/v/pytest-requests.svg)](https://pypi.org/project/pytest-requests)
 
-.. image:: https://img.shields.io/pypi/pyversions/pytest-requests.svg
-    :target: https://pypi.org/project/pytest-requests
-    :alt: Python versions
+[![Python versions](https://img.shields.io/pypi/pyversions/pytest-requests.svg)](https://pypi.org/project/pytest-requests)
 
-.. image:: https://travis-ci.org/okken/pytest-requests.svg?branch=master
-    :target: https://travis-ci.org/okken/pytest-requests
-    :alt: See Build Status on Travis CI
+[![See Build Status on Travis CI](https://travis-ci.org/okken/pytest-requests.svg?branch=master)](https://travis-ci.org/okken/pytest-requests)
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/okken/pytest-requests?branch=master
-    :target: https://ci.appveyor.com/project/okken/pytest-requests/branch/master
-    :alt: See Build Status on AppVeyor
+[![See Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/okken/pytest-requests?branch=master)](https://ci.appveyor.com/project/okken/pytest-requests/branch/master)
 
 Fixtures to mock requests
 
-----
+------------------------------------------------------------------------
 
-This `pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`_'s `cookiecutter-pytest-plugin`_ template.
-
+This [pytest](https://github.com/pytest-dev/pytest) plugin was generated
+with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with
+[\@hackebrot](https://github.com/hackebrot)\'s
+[cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
+template.
 
 Features
 --------
 
-* TODO
-
+-   TODO
 
 Requirements
 ------------
 
-* TODO
-
+-   TODO
 
 Installation
 ------------
 
-You can install "pytest-requests" via `pip`_ from `PyPI`_::
+You can install \"pytest-requests\" via
+[pip](https://pypi.org/project/pip/) from
+[PyPI](https://pypi.org/project):
 
     $ pip install pytest-requests
-
 
 Usage
 -----
 
-* TODO
+-   TODO
 
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
-the coverage at least stays the same before you submit a pull request.
+
+Contributions are very welcome. Tests can be run with
+[tox](https://tox.readthedocs.io/en/latest/), please ensure the coverage
+at least stays the same before you submit a pull request.
 
 License
 -------
 
-Distributed under the terms of the `MIT`_ license, "pytest-requests" is free and open source software
-
+Distributed under the terms of the
+[MIT](http://opensource.org/licenses/MIT) license, \"pytest-requests\"
+is free and open source software
 
 Issues
 ------
 
-If you encounter any problems, please `file an issue`_ along with a detailed description.
-
-.. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
-.. _`@hackebrot`: https://github.com/hackebrot
-.. _`MIT`: http://opensource.org/licenses/MIT
-.. _`BSD-3`: http://opensource.org/licenses/BSD-3-Clause
-.. _`GNU GPL v3.0`: http://www.gnu.org/licenses/gpl-3.0.txt
-.. _`Apache Software License 2.0`: http://www.apache.org/licenses/LICENSE-2.0
-.. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
-.. _`file an issue`: https://github.com/okken/pytest-requests/issues
-.. _`pytest`: https://github.com/pytest-dev/pytest
-.. _`tox`: https://tox.readthedocs.io/en/latest/
-.. _`pip`: https://pypi.org/project/pip/
-.. _`PyPI`: https://pypi.org/project
+If you encounter any problems, please [file an
+issue](https://github.com/okken/pytest-requests/issues) along with a
+detailed description.

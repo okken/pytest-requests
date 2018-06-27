@@ -6,22 +6,22 @@ import codecs
 from setuptools import setup
 
 
-def read(fname):
-    file_path = os.path.join(os.path.dirname(__file__), fname)
-    return codecs.open(file_path, encoding='utf-8').read()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 
 setup(
     name='pytest-requests',
-    version='0.1.0',
-    author='Brian Okken',
+    version='0.0.1',
+    author='Brian Okken / Anthony Shaw',
     author_email='http://testandcode.com/contact',
-    maintainer='Brian Okken',
+    maintainer='Brian Okken / Anthony Shaw',
     maintainer_email='http://testandcode.com/contact',
     license='MIT',
     url='https://github.com/okken/pytest-requests',
     description='Fixtures to mock requests',
-    long_description=read('README.rst'),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     py_modules=['pytest_requests'],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     install_requires=['pytest>=3.5.0'],
@@ -37,6 +37,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Operating System :: OS Independent',
