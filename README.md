@@ -1,5 +1,4 @@
-pytest-requests
-===============
+# pytest-requests
 
 [![PyPI version](https://img.shields.io/pypi/v/pytest-requests.svg)](https://pypi.org/project/pytest-requests)
 
@@ -19,46 +18,41 @@ with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with
 [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
 template.
 
-Features
---------
+## Features
 
 -   TODO
 
-Requirements
-------------
+## Requirements
 
 -   TODO
 
-Installation
-------------
+## Installation
 
 You can install \"pytest-requests\" via
 [pip](https://pypi.org/project/pip/) from
 [PyPI](https://pypi.org/project):
 
-    $ pip install pytest-requests
+```bash
+$ pip install pytest-requests
+```
 
-Usage
------
+## Usage
 
 -   TODO
 
-Contributing
-------------
+## Contributing
 
 Contributions are very welcome. Tests can be run with
 [tox](https://tox.readthedocs.io/en/latest/), please ensure the coverage
 at least stays the same before you submit a pull request.
 
-License
--------
+## License
 
 Distributed under the terms of the
 [MIT](http://opensource.org/licenses/MIT) license, \"pytest-requests\"
 is free and open source software
 
-Issues
-------
+## Issues
 
 If you encounter any problems, please [file an
 issue](https://github.com/okken/pytest-requests/issues) along with a
