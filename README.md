@@ -32,7 +32,18 @@ $ pip install pytest-requests
 
 ## Usage
 
--   TODO
+In the most simple use case, just use the `requests_mock` fixture, which provides
+a context manager called `patch`. It returns a patch instance which you can set the `.returns` value to a response. There is a response factory in `.good` or `.bad` which can take a string.
+
+```python
+import requests
+
+def test_simple(requests_mock):
+    with requests_mock.patch('/api/test') as patch:
+        patch.returns = requests_mock.good('hello')
+        response = requests.get('https://test.api/api/test')
+        assert response.text == 'hello'
+```
 
 ## Contributing
 
