@@ -4,6 +4,48 @@ from requests import Response
 from io import BytesIO
 
 
+def good(body, status_code=200, headers=None):
+    """
+    Return a "good" response, e.g. HTTP 200 OK
+    with a given body.
+
+    :param body: The body of the message
+    :type  body: ``str``
+
+    :param status_code: The HTTP status code
+    :type  status_code: ``int``
+
+    :param headers: Optional HTTP headers
+    :type  headers: ``dict``
+
+    >>> mock.returns = pytest_requests.good("hello")
+    """
+    if not isinstance(status_code, int):
+        raise TypeError("Status Code must be of type `int`")
+    return RequestsResponse(body, status_code)
+
+
+def bad(body, status_code=500, headers=None):
+    """
+    Return a "bad" response, e.g. HTTP 500 Server-Error
+    with a given body.
+
+    :param body: The body of the message
+    :type  body: ``str``
+
+    :param status_code: The HTTP status code
+    :type  status_code: ``int``
+
+    :param headers: Optional HTTP headers
+    :type  headers: ``dict``
+
+    >>> mock.returns = pytest_requests.good("hello")
+    """
+    if not isinstance(status_code, int):
+        raise TypeError("Status Code must be of type `int`")
+    return RequestsResponse(body, status_code)
+
+
 class RequestsResponse(object):
     """
     Abstraction of :class:`requests.Response`

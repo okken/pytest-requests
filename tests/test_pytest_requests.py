@@ -10,9 +10,9 @@ def test_fixture_simple_patch(testdir):
     testdir.makepyfile("""
         import requests
 
-        def test_simple(pytest_requests):
-            with pytest_requests.patch('/api/test') as patch:
-                patch.returns = pytest_requests.good('hello')
+        def test_simple(requests_mock):
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
                 response = requests.get('https://test.api/api/test')
                 assert response.text == 'hello'
     """)

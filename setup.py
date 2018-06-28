@@ -45,7 +45,7 @@ setup(
     ],
     entry_points={
         'pytest11': [
-            'requests = pytest_requests',
+            'requests = pytest_requests.plugin',
         ],
     },
 )
