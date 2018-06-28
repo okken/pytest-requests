@@ -1,7 +1,23 @@
 # -*- coding: utf-8 -*-
 
+import sys
 from requests import Response
 from io import BytesIO
+
+# Instead of depending on six
+if sys.version_info.major == 3:
+
+    def ensure_bytes(string):
+        if isinstance(string, bytes):
+            return string
+        else:
+            return string.encode()
+
+
+else:
+
+    def ensure_bytes(string):
+        return string
 
 
 def good(body, status_code=200, headers=None):
@@ -72,13 +88,13 @@ class RequestsResponse(object):
         """
         Set the response as a application/json MIME type
         """
-        self.headers['Content-Type'] = 'application/json'
+        self.headers["Content-Type"] = "application/json"
 
     def as_html(self):
         """
         Set the response as a text/html MIME type
         """
-        self.headers['Content-Type'] = 'text/html'
+        self.headers["Content-Type"] = "text/html"
 
     def as_type(self, mime_type):
         """
@@ -87,8 +103,8 @@ class RequestsResponse(object):
         :param mime_type: The MIME type, e.g. text/html
         :type  mime_type: ``str``
         """
-        self.headers['Content-Type'] = mime_type
-    
+        self.headers["Content-Type"] = mime_type
+
     def to_response(self, request):
         """
         Convert the response to a native :class:`requests.Response`
@@ -101,9 +117,9 @@ class RequestsResponse(object):
         """
         response = Response()
         response.url = request.url
-        response.raw = BytesIO(self.body)
+        response.raw = BytesIO(ensure_bytes(self.body))
         response.status_code = self.status_code
         response.headers = self.headers
         response.request = request
-        response._content = body
+        response._content = ensure_bytes(self.body)
         return response

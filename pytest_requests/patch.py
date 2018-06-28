@@ -5,13 +5,13 @@ from requests.adapters import BaseAdapter
 import contextlib
 from .response import RequestsResponse
 
-__all__ = ['patch']
+__all__ = ["patch"]
 
 
 @contextlib.contextmanager
 def patch(uri):
     patch_obj = RequestsPatchedAdapter(uri)
-    patcher = mock_patch('requests.adapters.HTTPAdapter', new=patch_obj)
+    patcher = mock_patch("requests.sessions.HTTPAdapter", new=patch_obj)
     patched_request = patcher.start()
     patch_obj.patched_request = patched_request
     yield patch_obj
@@ -33,6 +33,9 @@ class RequestsPatchedAdapter(BaseAdapter):
         self.uri = uri
         self.response = None
 
+    def __call__(self):
+        return self
+
     @property
     def returns(self):
         return self.response
@@ -49,9 +52,10 @@ class RequestsPatchedAdapter(BaseAdapter):
             raise TypeError("Returns value must be an instance of `RequestsResponse`")
         self.response = value
 
-    def send(self, request, stream=False, timeout=None, verify=True,
-             cert=None, proxies=None):
+    def send(
+        self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None
+    ):
         return self.response.to_response(request)
-    
+
     def close(self):
         pass
