@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
+
 import pytest
+from .plugin import good, bad, patch
 
 
 def pytest_addoption(parser):
@@ -17,5 +20,6 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture
-def bar(request):
-    return request.config.option.dest_foo
+def pytest_requests(request):
+    namespace = namedtuple('Namespace', ['good', 'bad', 'patch'])
+    return namespace(good, bad, patch)
