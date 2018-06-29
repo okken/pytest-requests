@@ -4,20 +4,20 @@ import sys
 from requests import Response
 from io import BytesIO
 
+
 # Instead of depending on six
 if sys.version_info.major == 3:
-
     def ensure_bytes(string):
         if isinstance(string, bytes):
             return string
         else:
             return string.encode()
-
-
 else:
-
     def ensure_bytes(string):
-        return string
+        if isinstance(string, unicode):
+            return string.encode()
+        else:
+            return string
 
 
 def good(body, status_code=200, headers=None):
@@ -89,12 +89,14 @@ class RequestsResponse(object):
         Set the response as a application/json MIME type
         """
         self.headers["Content-Type"] = "application/json"
+        return self
 
     def as_html(self):
         """
         Set the response as a text/html MIME type
         """
         self.headers["Content-Type"] = "text/html"
+        return self
 
     def as_type(self, mime_type):
         """
@@ -104,6 +106,7 @@ class RequestsResponse(object):
         :type  mime_type: ``str``
         """
         self.headers["Content-Type"] = mime_type
+        return self
 
     def to_response(self, request):
         """

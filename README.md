@@ -45,6 +45,20 @@ def test_simple(requests_mock):
         assert response.text == 'hello'
 ```
 
+With sessions
+
+```python
+import requests
+from requests.sessions import Session
+
+def test_simple_with_session(requests_mock):
+    with requests_mock.patch('/api/test') as patch:
+        patch.returns = requests_mock.good('hello')
+        with Session() as s:
+            response = s.get('https://test.api/api/test')
+            assert response.text == 'hello'
+```
+
 ## Contributing
 
 Contributions are very welcome. Tests can be run with

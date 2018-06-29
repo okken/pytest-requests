@@ -31,14 +31,14 @@ class RequestsPatchedAdapter(BaseAdapter):
         :type  uri: ``str``
         """
         self.uri = uri
-        self.response = None
+        self._response = None
 
     def __call__(self):
         return self
 
     @property
     def returns(self):
-        return self.response
+        return self._response
 
     @returns.setter
     def returns(self, value):
@@ -50,12 +50,12 @@ class RequestsPatchedAdapter(BaseAdapter):
         """
         if not isinstance(value, RequestsResponse):
             raise TypeError("Returns value must be an instance of `RequestsResponse`")
-        self.response = value
+        self._response = value
 
     def send(
         self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None
     ):
-        return self.response.to_response(request)
+        return self._response.to_response(request)
 
     def close(self):
         pass
