@@ -1,5 +1,7 @@
 include LICENSE
 include README.md
 
+recursive-include pytest_requests *
+recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
