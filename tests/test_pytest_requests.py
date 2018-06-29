@@ -78,14 +78,8 @@ def test_fixture_simple_patch_with_session_raises_error(testdir):
                         response.raise_for_status()
     """
     )
-
-    # run pytest with the following cmd args
     result = testdir.runpytest("-v")
-
-    # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(["*::test_simple_with_session PASSED*"])
-
-    # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
 
@@ -107,13 +101,8 @@ def test_fixture_json_api(testdir):
     """
     )
 
-    # run pytest with the following cmd args
     result = testdir.runpytest("-v")
-
-    # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(["*::test_json PASSED*"])
-
-    # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
 
@@ -132,11 +121,27 @@ def test_fixture_bad_path(testdir):
     """
     )
 
-    # run pytest with the following cmd args
     result = testdir.runpytest("-v")
-
-    # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
+    assert result.ret == 0
 
-    # make sure that that we get a '0' exit code for the testsuite
+
+def test_mock_context(testdir):
+    """Check that the patched HTTPAdapter is reset"""
+    testdir.makepyfile(
+        """
+        import requests
+        import requests.sessions
+        import pytest
+
+        def test_context(requests_mock):
+            original = requests.sessions.HTTPAdapter
+            with requests_mock.patch('/api/not_test') as patch:
+                assert requests.sessions.HTTPAdapter is not original
+            assert requests.sessions.HTTPAdapter is original
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_context PASSED*"])
     assert result.ret == 0

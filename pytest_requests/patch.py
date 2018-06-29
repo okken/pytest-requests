@@ -11,12 +11,11 @@ __all__ = ["patch"]
 
 @contextlib.contextmanager
 def patch(uri):
-    patch_obj = RequestsPatchedAdapter(uri)
-    patcher = mock_patch("requests.sessions.HTTPAdapter", new=patch_obj)
-    patched_request = patcher.start()
-    patch_obj.patched_request = patched_request
-    yield patch_obj
-    patcher.stop()
+    adapter = RequestsPatchedAdapter(uri)
+    patched_adapter = mock_patch("requests.sessions.HTTPAdapter", new=adapter)
+    patched_adapter.start()
+    yield adapter
+    patched_adapter.stop()
 
 
 class RequestsPatchedAdapter(BaseAdapter):

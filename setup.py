@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='pytest-requests',
-    version='0.0.1',
+    version='0.1.0',
     author='Brian Okken / Anthony Shaw',
     author_email='brian@pythontesting.net',
     maintainer='Brian Okken / Anthony Shaw',
