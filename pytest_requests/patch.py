@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from unittest.mock import patch as mock_patch
+from mock import patch as mock_patch
 from requests.adapters import BaseAdapter
 from requests.compat import urlparse
 import contextlib
