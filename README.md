@@ -67,7 +67,20 @@ def test_json(requests_mock):
         patch.returns = requests_mock.good(test_dict).as_json()
         response = requests.get('https://test.api/api/test')
         assert response.json() == test_dict
-        assert patch
+```
+
+Returning specific headers.
+
+```python
+import requests
+import pytest
+
+def test_json(requests_mock):
+    with requests_mock.patch('/api/test') as patch:
+        patch.returns = requests_mock.good('hello', headers={'X-Special': 'value'})
+        response = requests.get('https://test.api/api/test')
+        assert response.text == 'hello'
+        assert response.headers['X-Special'] == 'value'
 ```
 
 ## Contributing
