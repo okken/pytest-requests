@@ -61,7 +61,9 @@ class RequestsPatchedAdapter(BaseAdapter):
         self._call_count += 1
         url_parts = urlparse(request.url)
         if url_parts.path != self.uri:
-            raise AssertionError("URI path not matched, was {0} not {1}".format(url_parts.path, self.uri))
+            raise AssertionError(
+                "URI path not matched, was {0} not {1}".format(url_parts.path, self.uri)
+            )
         return self._response.to_response(request)
 
     def was_called_once(self):
@@ -71,7 +73,9 @@ class RequestsPatchedAdapter(BaseAdapter):
         :rtype: ``bool``
         """
         if self._call_count != 1:
-            raise AssertionError("URL was called {0} times, not 1".format(self._call_count))
+            raise AssertionError(
+                "URL was called {0} times, not 1".format(self._call_count)
+            )
         else:
             return True
 
@@ -82,8 +86,8 @@ class RequestsPatchedAdapter(BaseAdapter):
         :rtype: ``bool``
         """
         for key, value in headers.items():
-             assert key in self._request.headers
-             assert value  == self._request.headers[key]
+            assert key in self._request.headers
+            assert value == self._request.headers[key]
         return True
 
     def close(self):

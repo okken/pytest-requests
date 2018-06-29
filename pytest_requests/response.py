@@ -8,12 +8,16 @@ import json
 
 # Instead of depending on six
 if sys.version_info.major == 3:
+
     def ensure_bytes(string):
         if isinstance(string, bytes):
             return string
         else:
             return string.encode()
+
+
 else:
+
     def ensure_bytes(string):
         if isinstance(string, unicode):
             return string.encode()
