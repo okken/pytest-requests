@@ -6,19 +6,15 @@ Fixtures to mock requests
 
 ------------------------------------------------------------------------
 
-This [pytest](https://github.com/pytest-dev/pytest) plugin was generated
-with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with
-[\@hackebrot](https://github.com/hackebrot)\'s
-[cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
-template.
-
 ## Features
 
--   TODO
+- Patch responses to APIs with static or dynamic data
+- Support for both requests sessions and regular method calls
+- Native support for setting responses as dicitonaries for JSON APIs
 
 ## Requirements
 
--   TODO
+- PyTest 3.5+
 
 ## Installation
 
@@ -33,7 +29,7 @@ $ pip install pytest-requests
 ## Usage
 
 In the most simple use case, just use the `requests_mock` fixture, which provides
-a context manager called `patch`. It returns a patch instance which you can set the `.returns` value to a response. There is a response factory in `.good` or `.bad` which can take a string.
+a context manager called `patch`. It returns a patch instance which you can set the `.returns` value to a response. There is a response factory in `.good` or `.bad` which can take a string or a dictionary.
 
 ```python
 import requests
@@ -59,7 +55,7 @@ def test_simple_with_session(requests_mock):
             assert response.text == 'hello'
 ```
 
-Using JSON 
+`requests_mock.good` or `requests_mock.bad` can also take a dictionary, which will be converted to a JSON string implicitly.
 
 ```python
 import requests
@@ -71,6 +67,7 @@ def test_json(requests_mock):
         patch.returns = requests_mock.good(test_dict).as_json()
         response = requests.get('https://test.api/api/test')
         assert response.json() == test_dict
+        assert patch
 ```
 
 ## Contributing
@@ -90,3 +87,11 @@ is free and open source software
 If you encounter any problems, please [file an
 issue](https://github.com/okken/pytest-requests/issues) along with a
 detailed description.
+
+## Credits
+
+This [pytest](https://github.com/pytest-dev/pytest) plugin was generated
+with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with
+[\@hackebrot](https://github.com/hackebrot)\'s
+[cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
+template.

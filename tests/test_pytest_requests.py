@@ -16,6 +16,7 @@ def test_fixture_simple_patch(testdir):
                 patch.returns = requests_mock.good('hello')
                 response = requests.get('https://test.api/api/test')
                 assert response.text == 'hello'
+                assert patch.was_called_once()
     """
     )
 
@@ -98,6 +99,8 @@ def test_fixture_json_api(testdir):
                 patch.returns = requests_mock.good(test_dict).as_json()
                 response = requests.get('https://test.api/api/test')
                 assert response.json() == test_dict
+                assert 'Content-Type' in response.headers
+                assert response.headers['Content-Type'] == 'application/json'
     """
     )
 
@@ -144,4 +147,125 @@ def test_mock_context(testdir):
 
     result = testdir.runpytest("-v")
     result.stdout.fnmatch_lines(["*::test_context PASSED*"])
+    assert result.ret == 0
+
+
+def test_returned_headers(testdir):
+    testdir.makepyfile(
+        """
+        import requests
+        import pytest
+
+        def test_headers(requests_mock):
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello', headers={'X-Special': 'value'})
+                response = requests.get('https://test.api/api/test')
+                assert response.text == 'hello'
+                assert response.headers['X-Special'] == 'value'
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_headers PASSED*"])
+    assert result.ret == 0
+
+
+def test_call_count(testdir):
+    testdir.makepyfile(
+        """
+        import pytest
+        def test_simple(requests_mock):
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
+                with pytest.raises(AssertionError):
+                    assert patch.was_called_once()
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
+    assert result.ret == 0
+
+
+def test_assert_headers(testdir):
+    testdir.makepyfile(
+        """
+        import pytest
+        import requests
+        def test_simple(requests_mock):
+            test_headers = {'X-Special': 'value'}
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
+                requests.get('https://api.com/api/test', headers=test_headers)
+                assert patch.was_called_with_headers(test_headers)
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
+    assert result.ret == 0
+
+
+def test_assert_headers_invalid(testdir):
+    testdir.makepyfile(
+        """
+        import pytest
+        import requests
+        def test_simple(requests_mock):
+            test_headers = {'X-Special': 'value'}
+            test_headers_invalid = {'X-Special': 'not-value'}
+
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
+                requests.get('https://api.com/api/test', headers=test_headers_invalid)
+                with pytest.raises(AssertionError):
+                    assert patch.was_called_with_headers(test_headers)
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
+    assert result.ret == 0
+
+
+def test_assert_headers_casing(testdir):
+    testdir.makepyfile(
+        """
+        import pytest
+        import requests
+        def test_simple(requests_mock):
+            test_headers = {'X-Special': 'value'}
+            test_headers_lower = {'x-special': 'value'}
+
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
+                requests.get('https://api.com/api/test', headers=test_headers_lower)
+                assert patch.was_called_with_headers(test_headers)
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
+    assert result.ret == 0
+
+
+def test_assert_headers_ordering(testdir):
+    testdir.makepyfile(
+        """
+        import pytest
+        import requests
+
+        def test_simple(requests_mock):
+            test_headers = {'X-Special': 'value', 'X-Special-2': 'value2'}
+            test_headers_2 = {'X-Special-2': 'value2', 'X-Special': 'value'}
+
+            with requests_mock.patch('/api/test') as patch:
+                patch.returns = requests_mock.good('hello')
+                requests.get('https://api.com/api/test', headers=test_headers_2)
+                assert patch.was_called_with_headers(test_headers)
+    """
+    )
+
+    result = testdir.runpytest("-v")
+    result.stdout.fnmatch_lines(["*::test_simple PASSED*"])
     assert result.ret == 0

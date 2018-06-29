@@ -32,6 +32,8 @@ class RequestsPatchedAdapter(BaseAdapter):
         """
         self.uri = uri
         self._response = None
+        self._call_count = 0
+        self._request = None
 
     def __call__(self):
         return self
@@ -55,10 +57,34 @@ class RequestsPatchedAdapter(BaseAdapter):
     def send(
         self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None
     ):
+        self._request = request
+        self._call_count += 1
         url_parts = urlparse(request.url)
         if url_parts.path != self.uri:
             raise AssertionError("URI path not matched, was {0} not {1}".format(url_parts.path, self.uri))
         return self._response.to_response(request)
+
+    def was_called_once(self):
+        """
+        Returns a ``bool`` for whether this URL has been called only once.
+
+        :rtype: ``bool``
+        """
+        if self._call_count != 1:
+            raise AssertionError("URL was called {0} times, not 1".format(self._call_count))
+        else:
+            return True
+
+    def was_called_with_headers(self, headers):
+        """
+        Assert that URL was called with specific headers
+
+        :rtype: ``bool``
+        """
+        for key, value in headers.items():
+             assert key in self._request.headers
+             assert value  == self._request.headers[key]
+        return True
 
     def close(self):
         pass

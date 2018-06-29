@@ -21,7 +21,7 @@ else:
             return string
 
 
-def good(body, status_code=200, headers=None):
+def good(body, status_code=200, headers={}):
     """
     Return a "good" response, e.g. HTTP 200 OK
     with a given body.
@@ -39,10 +39,10 @@ def good(body, status_code=200, headers=None):
     """
     if not isinstance(status_code, int):
         raise TypeError("Status Code must be of type `int`")
-    return RequestsResponse(body, status_code)
+    return RequestsResponse(body, status_code=status_code, headers=headers)
 
 
-def bad(body, status_code=500, headers=None):
+def bad(body, status_code=500, headers={}):
     """
     Return a "bad" response, e.g. HTTP 500 Server-Error
     with a given body.
@@ -60,7 +60,7 @@ def bad(body, status_code=500, headers=None):
     """
     if not isinstance(status_code, int):
         raise TypeError("Status Code must be of type `int`")
-    return RequestsResponse(body, status_code)
+    return RequestsResponse(body, status_code=status_code, headers=headers)
 
 
 class RequestsResponse(object):
