@@ -3,6 +3,7 @@
 import sys
 from requests import Response
 from io import BytesIO
+import json
 
 
 # Instead of depending on six
@@ -71,8 +72,8 @@ class RequestsResponse(object):
         """
         Instantiate a :class:`RequestsResponse`
 
-        :param body: The body of the response
-        :type  body: ``str``
+        :param body: The body of the response, or a dictionary for JSON data
+        :type  body: ``str`` or ``dict``
 
         :param status_code: The HTTP status code
         :type  status_code: ``int``
@@ -80,6 +81,9 @@ class RequestsResponse(object):
         :param headers: Headers for the response
         :type  headers: ``dict``
         """
+        if isinstance(body, dict):
+            body = json.dumps(body)
+
         self.body = body
         self.status_code = status_code
         self.headers = headers

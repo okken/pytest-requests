@@ -2,6 +2,7 @@
 
 from unittest.mock import patch as mock_patch
 from requests.adapters import BaseAdapter
+from requests.compat import urlparse
 import contextlib
 from .response import RequestsResponse
 
@@ -55,6 +56,9 @@ class RequestsPatchedAdapter(BaseAdapter):
     def send(
         self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None
     ):
+        url_parts = urlparse(request.url)
+        if url_parts.path != self.uri:
+            raise AssertionError("URI path not matched, was {0} not {1}".format(url_parts.path, self.uri))
         return self._response.to_response(request)
 
     def close(self):

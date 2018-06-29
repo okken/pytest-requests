@@ -59,6 +59,20 @@ def test_simple_with_session(requests_mock):
             assert response.text == 'hello'
 ```
 
+Using JSON 
+
+```python
+import requests
+import pytest
+
+def test_json(requests_mock):
+    test_dict = {'a': 'b'}
+    with requests_mock.patch('/api/test') as patch:
+        patch.returns = requests_mock.good(test_dict).as_json()
+        response = requests.get('https://test.api/api/test')
+        assert response.json() == test_dict
+```
+
 ## Contributing
 
 Contributions are very welcome. Tests can be run with
