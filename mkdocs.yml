@@ -7,4 +7,4 @@ theme: readthedocs
 repo_url: https://github.com/okken/pytest-requests
 
 pages:
-- Home: index.md
+- Home: docs/index.md
