@@ -22,7 +22,7 @@ setup(
     description='Fixtures to mock requests',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    py_modules=['pytest_requests'],
+    packages=['pytest_requests'],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     install_requires=['pytest>=3.5.0', 'requests>=2.0.0,<3.0.0', 'mock>=2.0.0'],
     classifiers=[
