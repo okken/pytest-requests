@@ -8,7 +8,7 @@ This project is inactive.
 
 It is a project for providing fixtures for mocking requests.
 
-However, we have discovered that [the rsponses project](https://github.com/getsentry/responses) is quite good.
+However, we have discovered that [the responses project](https://github.com/getsentry/responses) is quite good.
 
 Please, try responses first.
 
